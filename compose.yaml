@@ -1,10 +1,25 @@
 services:
   mysql:
-    image: 'mysql:latest'
+    container_name: mysql
+    image: 'mysql:8.1.0'
     environment:
-      - 'MYSQL_DATABASE=mydatabase'
+      - 'MYSQL_DATABASE=tododatabase'
       - 'MYSQL_PASSWORD=secret'
       - 'MYSQL_ROOT_PASSWORD=verysecret'
       - 'MYSQL_USER=myuser'
+    volumes:
+      - mysqldata:/var/lib/mysql
     ports:
-      - '3306'
+      - "3306:3306"
+  adminer:
+    container_name: adminer
+    hostname: adminer
+    image: adminer:latest
+    restart: always
+    ports:
+      - 8000:8080
+    depends_on:
+      - mysql
+volumes:
+  mysqldata:
+    name: db_volume

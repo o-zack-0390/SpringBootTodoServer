@@ -1,10 +1,19 @@
+// gradle スクリプトを実行するために必要な依存関係を追加
+buildscript {
+	dependencies {
+		// Flyway の MySQL ライブラリをビルドスクリプトに追加
+		classpath 'org.flywaydb:flyway-mysql:10.0.0'
+	}
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.1'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id "org.flywaydb.flyway" version "10.0.0"
 }
 
-group = 'com.ozack'
+group = 'com.ozack' // ここはプロジェクト生成時に決めた名前にする
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -39,6 +48,27 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+// マイグレーションツールの設定
+flyway {
+	// データベースへの接続 URL を指定
+	url = 'jdbc:mysql://127.0.0.1:3306/tododatabase'
+
+	// データベースに接続するためのユーザー名を指定
+	user = 'myuser'
+
+	// データベースに接続するためのパスワードを指定
+	password = 'secret'
+
+	// Flywayが適用されるスキーマ（データベース）を指定
+	schemas = ['tododatabase']
+
+	// Flywayのクリーンアップ（マイグレーションを全て取り消し、データベースを初期状態に戻す設定）を無効
+	cleanDisabled = false
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// ./gradlew を実行したときに起動するタスクを設定
+defaultTasks 'clean', 'build', 'bootRun'
