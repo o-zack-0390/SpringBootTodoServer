@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.ozack.todoapp.dto.response.ResponseUserDto;
 import com.ozack.todoapp.repository.entity.User;
 
-
 /* ユーザー情報を格納している user テーブルと対応 */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
