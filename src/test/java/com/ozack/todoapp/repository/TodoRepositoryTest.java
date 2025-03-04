@@ -58,7 +58,7 @@ public class TodoRepositoryTest {
         // データ取得時のレスポンスタイムを計測
         long start = System.currentTimeMillis();
         List<Todo> todos = todoRepository.findAllByUserIdWithCategories(1L);
-        logger.info("Elapsed time to read -->" + (System.currentTimeMillis() - start));
+        logger.info("Elapsed read time -->" + (System.currentTimeMillis() - start));
 
         // Dto に変換
         List<ResponseTodoDto> actual = convertResponseTodoDto(todos);

@@ -40,7 +40,7 @@ public class AuthorityRepositoryTest {
         // データ取得時のレスポンスタイムを計測
         long start = System.currentTimeMillis();
         List<Authority> actual = authorityRepository.findAll();
-        logger.info("Elapsed time to read -->" + (System.currentTimeMillis() - start));
+        logger.info("Elapsed read time -->" + (System.currentTimeMillis() - start));
 
         assertEquals(expected.get(0).getId(), actual.get(0).getId());
         assertEquals(expected.get(0).getName(), actual.get(0).getName());
@@ -80,7 +80,7 @@ public class AuthorityRepositoryTest {
         // レスポンスタイムを計測
         long start = System.currentTimeMillis();
         Authority savedEntity = authorityRepository.save(expected);
-        logger.info("Elapsed insert time -->" + (System.currentTimeMillis() - start));
+        logger.info("Elapsed update time -->" + (System.currentTimeMillis() - start));
 
         Authority actual = authorityRepository.findById(savedEntity.getId()).orElse(null);
         assertEquals(expected.getId(), actual.getId());
@@ -97,7 +97,7 @@ public class AuthorityRepositoryTest {
         // レスポンスタイムを計測
         long start = System.currentTimeMillis();
         authorityRepository.deleteById(id);
-        logger.info("Elapsed insert time -->" + (System.currentTimeMillis() - start));
+        logger.info("Elapsed delete time -->" + (System.currentTimeMillis() - start));
 
         Authority actual = authorityRepository.findById(id).orElse(null);
         assertEquals(null, actual);
