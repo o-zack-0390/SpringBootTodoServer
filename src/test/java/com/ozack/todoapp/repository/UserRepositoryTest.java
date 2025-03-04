@@ -108,7 +108,7 @@ public class UserRepositoryTest {
 
     /* 4. データの削除を試みる */
     @Test
-    @Sql({"/db/migration/repository/user/common.sql", "/db/migration/repository/user/update.sql"})
+    @Sql({"/db/migration/repository/user/common.sql", "/db/migration/repository/user/delete.sql"})
     public void test_deleteById() {
 
         Long id = 1L;

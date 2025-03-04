@@ -89,7 +89,7 @@ public class AuthorityRepositoryTest {
 
     /* 4. データの削除を試みる */
     @Test
-    @Sql("/db/migration/repository/authority/update.sql")
+    @Sql("/db/migration/repository/authority/delete.sql")
     public void test_deleteById() {
 
         Long id = 1L;

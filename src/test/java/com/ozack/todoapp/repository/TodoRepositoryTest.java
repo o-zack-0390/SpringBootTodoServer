@@ -143,7 +143,7 @@ public class TodoRepositoryTest {
 
     /* 4. データの削除を試みる */
     @Test
-    @Sql({"/db/migration/repository/todo/common.sql", "/db/migration/repository/todo/update.sql"})
+    @Sql({"/db/migration/repository/todo/common.sql", "/db/migration/repository/todo/delete.sql"})
     public void test_deleteById() {
 
         Long id = 1L;

@@ -89,7 +89,7 @@ public class CategoryRepositoryTest {
 
     /* 4. データの削除を試みる */
     @Test
-    @Sql("/db/migration/repository/category/update.sql")
+    @Sql("/db/migration/repository/category/delete.sql")
     public void test_deleteById() {
 
         Long id = 1L;
