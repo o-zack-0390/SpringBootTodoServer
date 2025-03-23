@@ -3,7 +3,8 @@ INSERT INTO `category`
  (`id`, `name`, `created_at`, `updated_at`)
 VALUES
  (1, 'category-name-1', '2025-05-17 07:04:10', '2025-05-17 07:04:10'),
- (2, 'category-name-2', '2025-05-17 07:04:10', '2025-05-17 07:04:10');
+ (2, 'category-name-2', '2025-05-17 07:04:10', '2025-05-17 07:04:10'),
+ (3, 'category-name-3', '2025-05-17 07:04:10', '2025-05-17 07:04:10');
 
  -- 権限
 INSERT INTO `authority`
