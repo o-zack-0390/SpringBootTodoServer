@@ -36,7 +36,7 @@ public class TodoRepositoryTest {
     /* 1. 指定の todo_id を保持する全ての Todo データの取得を試みる. */
     @Test
     @Sql({"/db/migration/repository/todo/common.sql", "/db/migration/repository/todo/read.sql"})
-    public void test_findByTodoId() {
+    public void test_findAllByUserIdWithCategories() {
 
         ResponseTodoDto data1 = new ResponseTodoDto(
             1L,

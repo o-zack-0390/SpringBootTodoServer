@@ -30,7 +30,7 @@ public class UserRepositoryTest {
     /* 1. 指定の email を保持するデータの取得を試みる. */
     @Test
     @Sql({"/db/migration/repository/user/common.sql", "/db/migration/repository/user/read.sql"})
-    public void test_findByEmail() {
+    public void test_findByEmailWithAuthority() {
 
         ResponseUserDto expected = new ResponseUserDto(
             1L,
