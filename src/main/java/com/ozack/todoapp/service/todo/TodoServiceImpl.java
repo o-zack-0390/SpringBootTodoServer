@@ -9,6 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ozack.todoapp.dto.response.ResponseTodoCategoryDto;
 import com.ozack.todoapp.dto.response.ResponseTodoDto;
 import com.ozack.todoapp.exception.DeleteException;
 import com.ozack.todoapp.exception.InsertException;
@@ -82,9 +83,12 @@ public class TodoServiceImpl implements TodoService {
                             todo.getTodoCategories()
                                 .stream()
                                 .sorted(Comparator.comparing(todoCategory -> todoCategory.getCategory().getName())) // 名前順にソート
-                                .map(todoCategory -> new Category( // カテゴリー型に変換
-                                    todoCategory.getCategoryId(),
-                                    todoCategory.getCategory().getName()
+                                .map(todoCategory -> new ResponseTodoCategoryDto( // カテゴリー型に変換
+                                    todoCategory.getId(),
+                                    new Category(
+                                        todoCategory.getCategoryId(),
+                                        todoCategory.getCategory().getName()
+                                    )
                                 ))
                                 .collect(Collectors.toList())
                     ))

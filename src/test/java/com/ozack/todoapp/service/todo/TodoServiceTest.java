@@ -17,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ozack.todoapp.dto.response.ResponseTodoCategoryDto;
 import com.ozack.todoapp.dto.response.ResponseTodoDto;
 import com.ozack.todoapp.repository.TodoRepository;
 import com.ozack.todoapp.repository.entity.Category;
@@ -46,8 +47,14 @@ public class TodoServiceTest {
             "todo-title-1",
             true,
             Arrays.asList(
-                new Category(1L, "category-name-1"),
-                new Category(2L, "category-name-2")
+                new ResponseTodoCategoryDto(
+                    1L,
+                    new Category(1L, "category-name-1")
+                ),
+                new ResponseTodoCategoryDto(
+                    2L,
+                    new Category(2L, "category-name-2")
+                )
             )
         );
         ResponseTodoDto data2 = new ResponseTodoDto(
@@ -71,25 +78,25 @@ public class TodoServiceTest {
         assertEquals(expected1.id(), actual1.id());
         assertEquals(expected1.title(), actual1.title());
         assertEquals(expected1.isCheck(), actual1.isCheck());
-        assertEquals(0, actual1.categories().size());
+        assertEquals(0, actual1.todoCategories().size());
         assertEquals(expected2.id(), actual2.id());
         assertEquals(expected2.title(), actual2.title());
         assertEquals(expected2.isCheck(), actual2.isCheck());
         assertEquals(
-            expected2.categories().get(0).getId(),
-            actual2.categories().get(0).getId()
+            expected2.todoCategories().get(0).category().getId(),
+            actual2.todoCategories().get(0).category().getId()
         );
         assertEquals(
-            expected2.categories().get(0).getName(),
-            actual2.categories().get(0).getName()
+            expected2.todoCategories().get(0).category().getName(),
+            actual2.todoCategories().get(0).category().getName()
         );
         assertEquals(
-            expected2.categories().get(1).getId(),
-            actual2.categories().get(1).getId()
+            expected2.todoCategories().get(1).category().getId(),
+            actual2.todoCategories().get(1).category().getId()
         );
         assertEquals(
-            expected2.categories().get(1).getName(),
-            actual2.categories().get(1).getName()
+            expected2.todoCategories().get(1).category().getName(),
+            actual2.todoCategories().get(1).category().getName()
         );
     }
 
