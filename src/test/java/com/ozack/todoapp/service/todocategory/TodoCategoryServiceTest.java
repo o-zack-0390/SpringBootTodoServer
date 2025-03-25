@@ -2,9 +2,11 @@ package com.ozack.todoapp.service.todocategory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -123,16 +125,16 @@ public class TodoCategoryServiceTest {
     @Sql({"/db/migration/service/todocategory/common.sql", "/db/migration/service/todocategory/delete.sql"})
     public void test_deleteTodoCategory() {
 
-        Long id = 1L;
+        List<Long> ids = Arrays.asList(1L, 2L);
 
         try {
             // レスポンスタイムを計測
             long start = System.currentTimeMillis();
-            todoCategoryService.deleteTodoCategory(id);
+            todoCategoryService.deleteTodoCategories(ids);
             logger.info("Elapsed delete time -->" + (System.currentTimeMillis() - start));
             // 値を検証
-            TodoCategory actual = todoCategoryRepository.findById(id).orElse(null);
-            assertEquals(null, actual);
+            List<TodoCategory> actual = todoCategoryRepository.findAllById(ids);
+            assertTrue(actual.isEmpty());
         } catch (Exception e) {
             fail(e.getMessage());
         }

@@ -18,6 +18,6 @@ public interface TodoCategoryService {
     public List<TodoCategory> updateTodoCategories(List<TodoCategory> todoCategories) throws TodoAppException;
 
     /* データを削除するメソッド */
-    public void deleteTodoCategory(Long todoCategoryId) throws TodoAppException;
+    public void deleteTodoCategories(List<Long> todoCategoryIds) throws TodoAppException;
 
 }

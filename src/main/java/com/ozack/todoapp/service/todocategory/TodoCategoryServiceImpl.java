@@ -19,9 +19,8 @@ public class TodoCategoryServiceImpl implements TodoCategoryService {
 
     private final String loadErrorMessage = "todo_category テーブルのデータ取得に失敗しました。";
     private final String insertErrorMessageByDataAccess = "todo_category データ登録時にデータベース関連のエラーが発生しました。";
-    private final String insertErrorMessageByRuntime = "todo_category データ登録時に予期しないエラーが発生しました。";
     private final String updateErrorMessageByDataAccess = "todo_category データ更新時にデータベース関連のエラーが発生しました。";
-    private final String updateErrorMessageByRuntime = "todo_category データ更新時に予期しないエラーが発生しました。";
+    private final String deleteErrorMessageByLoad = "todo_category データを削除できませんでした。";
 
     private final TodoCategoryRepository todoCategoryRepository;
 
@@ -45,10 +44,6 @@ public class TodoCategoryServiceImpl implements TodoCategoryService {
             return res;
         } catch (DataAccessException e) {
             throw new InsertException(insertErrorMessageByDataAccess, e);
-        } catch (RuntimeException e) {
-            throw new InsertException(insertErrorMessageByRuntime, e);
-        } catch (TodoAppException e) {
-            throw new TodoAppException(loadErrorMessage, e);
         }
     }
 
@@ -62,20 +57,16 @@ public class TodoCategoryServiceImpl implements TodoCategoryService {
             return res;
         } catch (DataAccessException e) {
             throw new UpdateException(updateErrorMessageByDataAccess, e);
-        } catch (RuntimeException e) {
-            throw new UpdateException(updateErrorMessageByRuntime, e);
-        } catch (TodoAppException e) {
-            throw new TodoAppException(loadErrorMessage, e);
         }
     }
 
     /* データを削除するメソッド */
     @Override
     @Transactional(rollbackFor = TodoAppException.class)
-    public void deleteTodoCategory(Long todoCategoryId) throws TodoAppException {
-        todoCategoryRepository.deleteById(todoCategoryId);
-        TodoCategory res = todoCategoryRepository.findById(todoCategoryId).orElse(null);
-        if (res != null) throw new DeleteException(loadErrorMessage);
+    public void deleteTodoCategories(List<Long> todoCategoryIds) throws TodoAppException {
+        todoCategoryRepository.deleteAllById(todoCategoryIds);
+        List<TodoCategory> res = todoCategoryRepository.findAllById(todoCategoryIds);
+        if (!res.isEmpty()) throw new DeleteException(deleteErrorMessageByLoad);
     }
 
 }
