@@ -19,9 +19,7 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     private final String loadErrorMessage = "authority テーブルのデータ取得に失敗しました。";
     private final String insertErrorMessageByDataAccess = "authority データ登録時にデータベース関連のエラーが発生しました。";
-    private final String insertErrorMessageByRuntime = "authority データ登録時に予期しないエラーが発生しました。";
     private final String updateErrorMessageByDataAccess = "authority データ更新時にデータベース関連のエラーが発生しました。";
-    private final String updateErrorMessageByRuntime = "authority データ更新時に予期しないエラーが発生しました。";
 
     private final AuthorityRepository authorityRepository;
 
@@ -44,10 +42,6 @@ public class AuthorityServiceImpl implements AuthorityService {
             return res;
         } catch (DataAccessException e) {
             throw new InsertException(insertErrorMessageByDataAccess, e);
-        } catch (RuntimeException e) {
-            throw new InsertException(insertErrorMessageByRuntime, e);
-        } catch (TodoAppException e) {
-            throw new TodoAppException(loadErrorMessage, e);
         }
     }
 
@@ -61,10 +55,6 @@ public class AuthorityServiceImpl implements AuthorityService {
             return res;
         } catch (DataAccessException e) {
             throw new UpdateException(updateErrorMessageByDataAccess, e);
-        } catch (RuntimeException e) {
-            throw new UpdateException(updateErrorMessageByRuntime, e);
-        } catch (TodoAppException e) {
-            throw new TodoAppException(loadErrorMessage, e);
         }
     }
 
