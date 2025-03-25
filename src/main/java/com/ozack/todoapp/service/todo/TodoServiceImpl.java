@@ -25,6 +25,7 @@ public class TodoServiceImpl implements TodoService {
     private final String loadErrorMessage = "todo テーブルのデータ取得に失敗しました。";
     private final String insertErrorMessageByDataAccess = "todo データ登録時にデータベース関連のエラーが発生しました。";
     private final String updateErrorMessageByDataAccess = "todo データ更新時にデータベース関連のエラーが発生しました。";
+    private final String deleteErrorMessageByLoad = "todo データを削除できませんでした。";
 
     private final TodoRepository todoRepository;
 
@@ -67,7 +68,7 @@ public class TodoServiceImpl implements TodoService {
     public void deleteTodo(Long todoId) throws TodoAppException {
         todoRepository.deleteById(todoId);
         Todo res = todoRepository.findById(todoId).orElse(null);
-        if (res != null) throw new DeleteException(loadErrorMessage);
+        if (res != null) throw new DeleteException(deleteErrorMessageByLoad);
     }
 
     /* リスト型の Todo エンティティをリスト型の Dto に変換するメソッド */

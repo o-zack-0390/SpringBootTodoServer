@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
     private final String loadErrorMessage = "user テーブルのデータ取得に失敗しました。";
     private final String insertErrorMessageByDataAccess = "user データ登録時にデータベース関連のエラーが発生しました。";
     private final String updateErrorMessageByDataAccess = "user データ更新時にデータベース関連のエラーが発生しました。";
+    private final String deleteErrorMessageByLoad = "user データを削除できませんでした。";
 
     private final UserRepository userRepository;
 
@@ -66,7 +67,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long userId) throws TodoAppException {
         userRepository.deleteById(userId);
         User res = userRepository.findById(userId).orElse(null);
-        if (res != null) throw new DeleteException(loadErrorMessage);
+        if (res != null) throw new DeleteException(deleteErrorMessageByLoad);
     }
 
 }

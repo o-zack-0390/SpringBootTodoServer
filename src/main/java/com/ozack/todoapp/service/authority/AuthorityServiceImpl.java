@@ -20,6 +20,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     private final String loadErrorMessage = "authority テーブルのデータ取得に失敗しました。";
     private final String insertErrorMessageByDataAccess = "authority データ登録時にデータベース関連のエラーが発生しました。";
     private final String updateErrorMessageByDataAccess = "authority データ更新時にデータベース関連のエラーが発生しました。";
+    private final String deleteErrorMessageByLoad = "authority データを削除できませんでした。";
 
     private final AuthorityRepository authorityRepository;
 
@@ -63,7 +64,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     public void deleteAuthority(Long authorityId) throws TodoAppException {
         authorityRepository.deleteById(authorityId);
         Authority res = authorityRepository.findById(authorityId).orElse(null);
-        if (res != null) throw new DeleteException(loadErrorMessage);
+        if (res != null) throw new DeleteException(deleteErrorMessageByLoad);
     }
 
 }

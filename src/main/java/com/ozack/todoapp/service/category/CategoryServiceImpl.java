@@ -20,6 +20,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final String loadErrorMessage = "category テーブルのデータ取得に失敗しました。";
     private final String insertErrorMessageByDataAccess = "category データ登録時にデータベース関連のエラーが発生しました。";
     private final String updateErrorMessageByDataAccess = "category データ更新時にデータベース関連のエラーが発生しました。";
+    private final String deleteErrorMessageByLoad = "category データを削除できませんでした。";
 
     private final CategoryRepository categoryRepository;
 
@@ -63,7 +64,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(Long categoryId) throws TodoAppException {
         categoryRepository.deleteById(categoryId);
         Category res = categoryRepository.findById(categoryId).orElse(null);
-        if (res != null) throw new DeleteException(loadErrorMessage);
+        if (res != null) throw new DeleteException(deleteErrorMessageByLoad);
     }
 
 }
