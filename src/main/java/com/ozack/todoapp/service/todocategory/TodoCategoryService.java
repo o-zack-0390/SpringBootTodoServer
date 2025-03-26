@@ -9,7 +9,7 @@ import com.ozack.todoapp.repository.entity.TodoCategory;
 public interface TodoCategoryService {
 
     /* 指定の todoId が存在する全ての TodoCategory データを取得するメソッド */
-    public List<TodoCategory> selectAllCategoriesByTodoIdWithCategories(Long todoId);
+    public List<TodoCategory> selectAllTodoCategoriesByTodoIdWithCategories(Long todoId);
 
     /* データを登録するメソッド */
     public List<TodoCategory> insertTodoCategories(List<TodoCategory> todoCategories) throws TodoAppException;

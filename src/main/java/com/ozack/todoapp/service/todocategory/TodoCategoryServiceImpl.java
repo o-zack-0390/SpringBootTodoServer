@@ -30,7 +30,7 @@ public class TodoCategoryServiceImpl implements TodoCategoryService {
 
     /* 指定の todoId が存在する全ての TodoCategory データを取得するメソッド */
     @Override
-    public List<TodoCategory> selectAllCategoriesByTodoIdWithCategories(Long todoId) {
+    public List<TodoCategory> selectAllTodoCategoriesByTodoIdWithCategories(Long todoId) {
         return todoCategoryRepository.findAllByTodoIdWithCategories(todoId);
     }
 
