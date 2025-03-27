@@ -106,7 +106,15 @@ public class TodoServiceTest {
     public void test_insertTodo() {
 
         // 期待値
-        Todo expected = new Todo(
+        ResponseTodoDto expected = new ResponseTodoDto(
+            null,
+            "todo-title-1",
+            true,
+            null
+        );
+
+        // 登録データ
+        Todo insertData = new Todo(
             null,
             1L,
             "todo-title-1",
@@ -116,13 +124,12 @@ public class TodoServiceTest {
         try {
             // レスポンスタイムを計測
             long start = System.currentTimeMillis();
-            Todo actual = todoService.insertTodo(expected);
+            ResponseTodoDto actual = todoService.insertTodo(insertData);
             logger.info("Elapsed insert time -->" + (System.currentTimeMillis() - start));
             // 値を検証
-            assertNotNull(actual.getId());
-            assertEquals(expected.getUserId(), actual.getUserId());
-            assertEquals(expected.getTitle(), actual.getTitle());
-            assertEquals(expected.getIsCheck(), actual.getIsCheck());
+            assertNotNull(actual.id());
+            assertEquals(expected.title(), actual.title());
+            assertEquals(expected.isCheck(), actual.isCheck());
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -134,7 +141,15 @@ public class TodoServiceTest {
     public void test_updateTodo() {
 
         // 期待値
-        Todo expected = new Todo(
+        ResponseTodoDto expected = new ResponseTodoDto(
+            1L,
+            "todo-title-2",
+            false,
+            null
+        );
+
+        // 更新データ
+        Todo updateData = new Todo(
             1L,
             1L,
             "todo-title-2",
@@ -144,13 +159,12 @@ public class TodoServiceTest {
         try {
             // レスポンスタイムを計測
             long start = System.currentTimeMillis();
-            Todo actual = todoService.updateTodo(expected);
+            ResponseTodoDto actual = todoService.updateTodo(updateData);
             logger.info("Elapsed update time -->" + (System.currentTimeMillis() - start));
             // 値を検証
-            assertNotNull(actual.getId());
-            assertEquals(expected.getUserId(), actual.getUserId());
-            assertEquals(expected.getTitle(), actual.getTitle());
-            assertEquals(expected.getIsCheck(), actual.getIsCheck());
+            assertEquals(expected.id(), actual.id());
+            assertEquals(expected.title(), actual.title());
+            assertEquals(expected.isCheck(), actual.isCheck());
         } catch (Exception e) {
             fail(e.getMessage());
         }

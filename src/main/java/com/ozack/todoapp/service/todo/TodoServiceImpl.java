@@ -42,10 +42,17 @@ public class TodoServiceImpl implements TodoService {
 
     /* データを登録するメソッド */
     @Transactional(rollbackFor = TodoAppException.class)
-    public Todo insertTodo(Todo todo) throws TodoAppException {
+    public ResponseTodoDto insertTodo(Todo todo) throws TodoAppException {
         try {
-            Todo res = todoRepository.save(todo);
-            if (res == null) throw new InsertException(loadErrorMessage);
+            Todo resTodo = todoRepository.save(todo);
+            if (resTodo == null) throw new InsertException(loadErrorMessage);
+            // Dto 変換
+            ResponseTodoDto res = new ResponseTodoDto(
+                resTodo.getId(),
+                resTodo.getTitle(),
+                resTodo.getIsCheck(),
+                null // フロント側で結合するため null で返却
+            );
             return res;
         } catch (DataAccessException e) {
             throw new InsertException(insertErrorMessageByDataAccess, e);
@@ -54,10 +61,17 @@ public class TodoServiceImpl implements TodoService {
 
     /* データを更新するメソッド */
     @Transactional(rollbackFor = TodoAppException.class)
-    public Todo updateTodo(Todo todo) throws TodoAppException {
+    public ResponseTodoDto updateTodo(Todo todo) throws TodoAppException {
         try {
-            Todo res = todoRepository.save(todo);
-            if (res == null) throw new UpdateException(loadErrorMessage);
+            Todo resTodo = todoRepository.save(todo);
+            if (resTodo == null) throw new UpdateException(loadErrorMessage);
+            // Dto 変換
+            ResponseTodoDto res = new ResponseTodoDto(
+                resTodo.getId(),
+                resTodo.getTitle(),
+                resTodo.getIsCheck(),
+                null // フロント側で結合するため null で返却
+            );
             return res;
         } catch (DataAccessException e) {
             throw new UpdateException(updateErrorMessageByDataAccess, e);

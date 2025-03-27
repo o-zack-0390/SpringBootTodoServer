@@ -6,11 +6,13 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ozack.todoapp.dto.response.ResponseTodoCategoryDto;
 import com.ozack.todoapp.exception.DeleteException;
 import com.ozack.todoapp.exception.InsertException;
 import com.ozack.todoapp.exception.TodoAppException;
 import com.ozack.todoapp.exception.UpdateException;
 import com.ozack.todoapp.repository.TodoCategoryRepository;
+import com.ozack.todoapp.repository.entity.Category;
 import com.ozack.todoapp.repository.entity.TodoCategory;
 
 /* Todo と Category のマッピング情報を処理するサービス */
@@ -28,18 +30,13 @@ public class TodoCategoryServiceImpl implements TodoCategoryService {
         this.todoCategoryRepository = todoCategoryRepository;
     }
 
-    /* 指定の todoId が存在する全ての TodoCategory データを取得するメソッド */
-    @Override
-    public List<TodoCategory> selectAllTodoCategoriesByTodoIdWithCategories(Long todoId) {
-        return todoCategoryRepository.findAllByTodoIdWithCategories(todoId);
-    }
-
     /* データを登録するメソッド */
     @Override
     @Transactional(rollbackFor = TodoAppException.class)
-    public List<TodoCategory> insertTodoCategories(List<TodoCategory> todoCategories) throws TodoAppException {
+    public List<ResponseTodoCategoryDto> insertTodoCategories(List<TodoCategory> todoCategories) throws TodoAppException {
         try {
-            List<TodoCategory> res = todoCategoryRepository.saveAll(todoCategories);
+            List<TodoCategory> resTodoCategories = todoCategoryRepository.saveAll(todoCategories);
+            List<ResponseTodoCategoryDto> res = convertResponseTodoCategoryDto(resTodoCategories);
             if (res == null) throw new InsertException(loadErrorMessage);
             return res;
         } catch (DataAccessException e) {
@@ -50,9 +47,10 @@ public class TodoCategoryServiceImpl implements TodoCategoryService {
     /* データを更新するメソッド */
     @Override
     @Transactional(rollbackFor = TodoAppException.class)
-    public List<TodoCategory> updateTodoCategories(List<TodoCategory> todoCategories) throws TodoAppException {
+    public List<ResponseTodoCategoryDto> updateTodoCategories(List<TodoCategory> todoCategories) throws TodoAppException {
         try {
-            List<TodoCategory> res = todoCategoryRepository.saveAll(todoCategories);
+            List<TodoCategory> resTodoCategories = todoCategoryRepository.saveAll(todoCategories);
+            List<ResponseTodoCategoryDto> res = convertResponseTodoCategoryDto(resTodoCategories);
             if (res == null) throw new UpdateException(loadErrorMessage);
             return res;
         } catch (DataAccessException e) {
@@ -67,6 +65,19 @@ public class TodoCategoryServiceImpl implements TodoCategoryService {
         todoCategoryRepository.deleteAllById(todoCategoryIds);
         List<TodoCategory> res = todoCategoryRepository.findAllById(todoCategoryIds);
         if (!res.isEmpty()) throw new DeleteException(deleteErrorMessageByLoad);
+    }
+
+    /* Dto 変換メソッド */
+    public List<ResponseTodoCategoryDto> convertResponseTodoCategoryDto(List<TodoCategory> todoCategories) {
+        return todoCategories
+            .stream()
+            .map(todoCategory ->
+                new ResponseTodoCategoryDto(
+                    todoCategory.getId(),
+                    new Category(todoCategory.getCategoryId(), null)
+                )
+            )
+            .toList();
     }
 
 }

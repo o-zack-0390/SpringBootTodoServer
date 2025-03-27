@@ -13,10 +13,10 @@ public interface TodoService {
     public List<ResponseTodoDto> selectAllTodosByUserIdWithCategories(Long userId);
 
     /* データを登録するメソッド */
-    public Todo insertTodo(Todo todo) throws TodoAppException;
+    public ResponseTodoDto insertTodo(Todo todo) throws TodoAppException;
 
     /* データを更新するメソッド */
-    public Todo updateTodo(Todo todo) throws TodoAppException;
+    public ResponseTodoDto updateTodo(Todo todo) throws TodoAppException;
 
     /* データを削除するメソッド */
     public void deleteTodo(Long todoId) throws TodoAppException;
